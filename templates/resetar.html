@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Redefinir Senha</title>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1f36, #0a0f1f);
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            color: #fff;
+        }
+
+        .reset-box {
+            width: 350px;
+            background: #0c1833;
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #00aaff;
+            box-shadow: 0 0 20px #0088ff99;
+        }
+
+        input {
+            width: 90%;
+            padding: 12px;
+            margin: 10px 0;
+            background: #111b34;
+            border: 1px solid #007fff;
+            border-radius: 8px;
+            color: #fff;
+            outline: none;
+        }
+
+        .btn {
+            width: 95%;
+            padding: 12px;
+            border-radius: 8px;
+            background: #00aaff;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #0088dd;
+        }
+
+        a {
+            color: #00c3ff;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="reset-box">
+        <h2>🔐 Redefinir Senha</h2>
+
+        <form method="POST">
+            <input type="password" name="senha" placeholder="Nova senha" required>
+            <button class="btn">Salvar nova senha</button>
+        </form>
+
+        <br>
+        <a href="/">Voltar ao login</a>
+    </div>
+
+</body>
+
+</html>

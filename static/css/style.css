@@ -1,0 +1,356 @@
+/* ================================
+   Reset
+================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body.dark {
+    background: #0a0f1f;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* ================================
+   Sidebar
+================================ */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 260px;
+    background: #0c122b;
+    padding: 30px 15px;
+    border-right: 2px solid #00aaff55;
+    box-shadow: 0 0 20px #0097ff55;
+}
+
+.sidebar-photo {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 3px solid #0088ff;
+    margin-bottom: 10px;
+}
+
+.profile-area {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.menu-item {
+    display: block;
+    padding: 12px;
+    margin: 10px 0;
+    background: #0b173a;
+    border-radius: 8px;
+    color: #cce6ff;
+    border: 1px solid #0088ff55;
+    transition: 0.25s;
+}
+
+.menu-item:hover,
+.menu-item.active {
+    background: #0088ff;
+    color: #fff;
+    box-shadow: 0 0 10px #0088ff;
+}
+
+.logout-btn,
+.toggle-theme {
+    width: 100%;
+    padding: 12px;
+    margin-top: 13px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+    transition: .3s;
+}
+
+.logout-btn { background: #ff3e3e; }
+.logout-btn:hover { background: #cc2d2d; }
+.toggle-theme { background: #00aaff; }
+.toggle-theme:hover { background: #0088dd; }
+
+/* ================================
+   Main
+================================ */
+.content {
+    margin-left: 280px;
+    padding: 25px;
+}
+
+/* ================================
+   Limite
+================================ */
+.limite-box {
+    background: #0c1833;
+    padding: 20px;
+    border: 2px solid #00aaff;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    box-shadow: 0 0 18px #0088ff55;
+}
+
+.limite-form {
+    display: flex;
+    gap: 10px;
+}
+
+.limite-form input {
+    padding: 10px;
+    width: 180px;
+    border-radius: 8px;
+    border: 1px solid #0099ff;
+}
+
+.btn-limite {
+    padding: 10px 20px;
+    background: #0099ff;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.btn-limite:hover {
+    background: #0077cc;
+}
+
+.alerta-texto { color: #33aaff; font-weight: bold; margin-top: 10px; }
+.alerta-vermelho { color: #ff3e3e !important; }
+
+/* ================================
+   Cards
+================================ */
+.cards {
+    display: flex;
+    gap: 20px;
+}
+
+.card {
+    background: #0c1833;
+    padding: 20px;
+    border-radius: 12px;
+    border: 2px solid #0099ff33;
+    width: 180px;
+    box-shadow: 0 0 15px #0088ff55;
+}
+
+.card h4 {
+    margin-bottom: 10px;
+}
+
+.card .value {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.card.saldo-positivo .value { color: #26d13a !important; }
+.card.saldo-negativo .value { color: #ff4d4d !important; }
+
+/* ================================
+   Gráficos
+================================ */
+.charts {
+    display: flex;
+    margin-top: 25px;
+    gap: 20px;
+}
+
+.chart-box {
+    background: #0c1833;
+    padding: 20px;
+    flex: 1;
+    border-radius: 12px;
+    border: 2px solid #0088ff55;
+    box-shadow: 0 0 18px #0088ff55;
+}
+
+/* ================================
+   Transações
+================================ */
+.painel-duplo {
+    display: flex;
+    gap: 20px;
+    margin-top: 35px;
+}
+
+.painel {
+    background: #0c1833;
+    padding: 25px;
+    border-radius: 12px;
+    flex: 1;
+    border: 2px solid #005a9c66;
+    box-shadow: 0 0 15px #0088ff33;
+}
+
+.lista-transacoes { list-style: none; }
+
+.item {
+    background: #111c3f;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #007fff55;
+}
+
+.item.entrada strong { color: #26d13a !important; }
+.item.despesa strong { color: #ff4d4d !important; }
+
+/* ================================
+   Botões
+================================ */
+.btn-add,
+.btn-acao,
+.cancel,
+.confirm {
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    border: none;
+    transition: .25s;
+}
+
+.btn-add { background: #0099ff; color: white; }
+.btn-add:hover { background: #0077cc; }
+
+.btn-acao.edit { background: #ffaa00; }
+.btn-acao.edit:hover { background: #d98b00; }
+
+.btn-acao.delete,
+.delete-btn { background: #ff3e3e; color: white; }
+.btn-acao.delete:hover,
+.delete-btn:hover { background: #cc2d2d; }
+
+.cancel { background: #666; color: white; }
+.cancel:hover { background: #555; }
+
+.confirm { background: #26d13a; color: white; }
+.confirm:hover { background: #1fa02e; }
+
+/* ================================
+   Modais
+================================ */
+.modal-bg {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0009;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal {
+    background: #0c1833;
+    padding: 25px;
+    border-radius: 15px;
+    width: 350px;
+    border: 2px solid #0099ffaa;
+    box-shadow: 0 0 25px #0088ff55;
+}
+
+.modal label {
+    margin-top: 10px;
+    display: block;
+}
+
+.modal input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #007fff;
+    background: #111b34;
+    color: #fff;
+}
+
+.modal-botoes {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+/* ================================
+   Filtros
+================================ */
+.filtro-box {
+    background: #0c1833;
+    padding: 20px;
+    border-radius: 12px;
+    border: 2px solid #0099ff55;
+    box-shadow: 0 0 18px #0088ff55;
+    margin-bottom: 25px;
+}
+
+.filtro-form {
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+}
+
+.filtro-group {
+    display: flex;
+    flex-direction: column;
+    color: #cce6ff;
+    font-weight: bold;
+}
+
+.filtro-group label {
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.filtro-group input {
+    padding: 10px;
+    background: #111c3f;
+    border: 1px solid #007fff;
+    border-radius: 8px;
+    color: #fff;
+    width: 170px;
+    font-size: 14px;
+}
+
+.btn-filtrar {
+    padding: 10px 20px;
+    background: #00aaff;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .3s;
+    border: none;
+}
+
+.btn-filtrar:hover {
+    background: #0088dd;
+}
+
+.btn-limpar {
+    padding: 10px 20px;
+    background: #ff3e3e;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.btn-limpar:hover {
+    background: #cc2d2d;
+}

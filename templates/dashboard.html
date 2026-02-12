@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="dark">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="profile-area">
+            {% if foto_url %}
+            <img src="{{ foto_url }}" class="sidebar-photo">
+            {% else %}
+            <img src="https://via.placeholder.com/120" class="sidebar-photo">
+            {% endif %}
+            <h3>{{ usuario }}</h3>
+        </div>
+
+        <nav class="menu">
+            <a href="/dashboard" class="menu-item active">📊 Dashboard</a>
+            <a href="/perfil" class="menu-item">👤 Perfil</a>
+            <a href="/relatorio_excel" class="menu-item">📄 Excel</a>
+            <a href="/relatorio_pdf" class="menu-item">🧾 PDF</a>
+        </nav>
+
+        <button class="logout-btn" onclick="window.location='/logout'">🚪 Sair</button>
+        <button class="toggle-theme" onclick="toggleTheme()">🌙 / ☀️</button>
+    </aside>
+
+    <!-- CONTEÚDO -->
+    <main class="content">
+
+        <!-- LIMITE DE GASTOS -->
+        <section class="limite-box">
+            <h3>Limite de Gastos</h3>
+
+            <form action="/definir_limite" method="POST" class="limite-form">
+                <input type="number" step="0.01" name="limite" placeholder="Digite o limite" value="{{ limite }}">
+                <button class="btn-limite">Definir Limite</button>
+            </form>
+        </section>
+
+        <!-- FILTRO -->
+        <section class="filtro-box">
+            <form method="GET" action="/dashboard" class="filtro-form">
+                <div class="filtro-group">
+                    <label>Início</label>
+                    <input type="date" name="inicio" value="{{ request.args.get('inicio','') }}">
+                </div>
+
+                <div class="filtro-group">
+                    <label>Fim</label>
+                    <input type="date" name="fim" value="{{ request.args.get('fim','') }}">
+                </div>
+
+                <button class="btn-filtrar">Filtrar</button>
+                <a href="/dashboard" class="btn-limpar">Limpar</a>
+            </form>
+        </section>
+
+        <!-- CARDS -->
+        <section class="cards">
+            <div class="card">
+                <h4>Entradas</h4>
+                <p class="value">{{ total_entradas }}</p>
+            </div>
+
+            <div class="card">
+                <h4>Despesas</h4>
+                <p class="value">{{ total_despesas }}</p>
+            </div>
+
+            <div class="card {% if saldo_total.startswith('R$ -') %}saldo-negativo{% else %}saldo-positivo{% endif %}">
+                <h4>Saldo</h4>
+                <p class="value">{{ saldo_total }}</p>
+            </div>
+        </section>
+
+        <!-- GRÁFICO LINHA -->
+        <section class="charts">
+            <div class="chart-box">
+                <h3>Evolução Financeira</h3>
+                <canvas id="graficoLinha"></canvas>
+            </div>
+        </section>
+
+        <!-- PAINEL ENTRADAS E DESPESAS -->
+        <section class="painel-duplo">
+
+            <!-- ENTRADAS -->
+            <div class="painel">
+                <h2>Entradas</h2>
+                <button class="btn-add" onclick="abrirAddEntrada()">+ Adicionar Entrada</button>
+
+                <ul class="lista-transacoes">
+                    {% for e in entradas %}
+                    <li class="item entrada">
+                        <div>
+                            <strong>+ {{ e.valor }}</strong>
+                            <span>{{ e.origem }}</span>
+                            <small style="color:#6fb9ff; display:block; font-size:12px;">
+                                {{ e.data }}
+                            </small>
+                        </div>
+
+                        <div class="acoes">
+                            <button class="btn-acao edit"
+                                onclick="abrirEditar('{{ e.id }}','entrada','{{ e.valor_raw }}','{{ e.origem }}','{{ e.data_raw }}')">
+                                Editar
+                            </button>
+
+                            <button class="btn-acao delete"
+                                onclick="abrirDelete('{{ e.id }}','entrada')">
+                                X
+                            </button>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- DESPESAS -->
+            <div class="painel">
+                <h2>Despesas</h2>
+                <button class="btn-add" onclick="abrirAddDespesa()">+ Adicionar Despesa</button>
+
+                <ul class="lista-transacoes">
+                    {% for d in despesas %}
+                    <li class="item despesa">
+                        <div>
+                            <strong>- {{ d.valor }}</strong>
+                            <span>{{ d.descricao }}</span>
+
+                            <small style="color:#ff8484; display:block; font-size:12px;">
+                                {{ d.data }}
+                            </small>
+
+                            {% if d.parcelado %}
+                            <small>(Parcelado em {{ d.parcelas }}x)</small>
+                            {% endif %}
+                        </div>
+
+                        <div class="acoes">
+                            <button class="btn-acao edit"
+                                onclick="abrirEditar('{{ d.id }}','despesa','{{ d.valor_raw }}','{{ d.descricao }}','{{ d.data_raw }}')">
+                                Editar
+                            </button>
+
+                            <button class="btn-acao delete"
+                                onclick="abrirDelete('{{ d.id }}','despesa')">
+                                X
+                            </button>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- MODAIS -->
+
+    <!-- ADICIONAR ENTRADA -->
+    <div id="modalAddEntrada" class="modal-bg">
+        <div class="modal">
+            <h2>Adicionar Entrada</h2>
+
+            <form method="POST" action="/add_entrada">
+                <label>Origem:</label>
+                <input type="text" name="origem" required>
+
+                <label>Valor:</label>
+                <input type="number" step="0.01" name="valor" required>
+
+                <div class="modal-botoes">
+                    <button type="button" class="cancel" onclick="fecharModais()">Cancelar</button>
+                    <button type="submit" class="confirm">Adicionar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ADICIONAR DESPESA -->
+    <div id="modalAddDespesa" class="modal-bg">
+        <div class="modal">
+            <h2>Adicionar Despesa</h2>
+
+            <form method="POST" action="/add_despesa">
+                <label>Categoria:</label>
+                <input type="text" name="descricao" required>
+
+                <label>Valor:</label>
+                <input type="number" step="0.01" name="valor" required>
+
+                <label><input type="checkbox" name="parcelado"> Parcelado</label>
+                <input type="number" name="parcelas" placeholder="N° parcelas">
+
+                <div class="modal-botoes">
+                    <button type="button" class="cancel" onclick="fecharModais()">Cancelar</button>
+                    <button type="submit" class="confirm">Adicionar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- EDITAR -->
+    <div id="modalEdit" class="modal-bg">
+        <div class="modal">
+            <h2>Editar Transação</h2>
+
+            <form method="POST" action="/editar">
+                <input type="hidden" id="edit-id" name="id">
+                <input type="hidden" id="edit-tipo" name="tipo">
+
+                <label>Descrição / Origem:</label>
+                <input type="text" id="edit-descricao" name="descricao">
+
+                <label>Valor:</label>
+                <input type="number" step="0.01" id="edit-valor" name="valor">
+
+                <label>Data e Hora:</label>
+                <input type="datetime-local" id="edit-data" name="data">
+
+                <div class="modal-botoes">
+                    <button type="button" class="cancel" onclick="fecharModais()">Cancelar</button>
+                    <button type="submit" class="confirm">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- DELETE -->
+    <div id="modalDelete" class="modal-bg">
+        <div class="modal">
+            <h2>Excluir Transação</h2>
+
+            <form method="POST" action="/delete">
+                <input type="hidden" id="delete-id" name="id">
+                <input type="hidden" id="delete-tipo" name="tipo">
+
+                <p>Tem certeza que deseja excluir?</p>
+
+                <div class="modal-botoes">
+                    <button type="button" class="cancel" onclick="fecharModais()">Cancelar</button>
+                    <button type="submit" class="confirm delete-btn">Excluir</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- DADOS JS -->
+    <script>
+        window.labels_linha = {{ labels_linha | safe }};
+        window.entradas_linha = {{ entradas_linha | safe }};
+        window.despesas_linha = {{ despesas_linha | safe }};
+    </script>
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
+    <!-- ALERTAS FLUTUANTES -->
+    <div id="flash-container"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            {% with msgs = get_flashed_messages(with_categories=true) %}
+                {% if msgs %}
+                    {% for cat, msg in msgs %}
+                        const box = document.createElement("div");
+                        box.className = "flash-msg flash-{{ cat }}";
+                        box.textContent = "{{ msg }}";
+                        document.getElementById("flash-container").appendChild(box);
+
+                        setTimeout(() => {
+                            box.style.opacity = 0;
+                            setTimeout(() => box.remove(), 500);
+                        }, 4000);
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        });
+    </script>
+
+    <style>
+        #flash-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        .flash-msg {
+            background: #ff4f4f;
+            color: white;
+            padding: 14px 22px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            font-size: 15px;
+            font-weight: bold;
+            box-shadow: 0 0 12px #0005;
+            transition: opacity 0.4s ease;
+        }
+
+        .flash-ok {
+            background: #4caf50;
+        }
+
+        .flash-erro {
+            background: #ff5252;
+        }
+    </style>
+
+</body>
+
+</html>

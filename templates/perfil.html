@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Perfil</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #000428, #004e92);
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            color: #fff;
+        }
+
+        .perfil-box {
+            width: 450px;
+            background: rgba(0,0,0,0.55);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #00aaff;
+            box-shadow: 0 0 20px #0099ff;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #00c3ff;
+            text-shadow: 0 0 8px #00baff;
+        }
+
+        .foto {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            border: 3px solid #00d1ff;
+            box-shadow: 0 0 20px #00baff;
+            object-fit: cover;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="file"] {
+            width: 90%;
+            padding: 12px;
+            margin-top: 10px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+        }
+
+        .btn-salvar {
+            margin-top: 20px;
+            width: 95%;
+            padding: 12px;
+            background: #00aaff;
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 17px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-salvar:hover {
+            background: #0088dd;
+        }
+
+        .sucesso {
+            margin-top: 10px;
+            color: #4dff7a;
+        }
+
+        .erro {
+            margin-top: 10px;
+            color: #ff4444;
+        }
+
+        .voltar {
+            margin-top: 20px;
+            display: inline-block;
+            color: #00c3ff;
+            text-decoration: none;
+        }
+
+        .voltar:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="perfil-box">
+        <h2>👤 Meu Perfil</h2>
+
+        <img src="{{ dados.foto_url if dados.foto_url else 'https://via.placeholder.com/150' }}"
+             class="foto">
+
+        <form method="POST" enctype="multipart/form-data">
+
+            <input type="text"
+                   name="nome"
+                   value="{{ dados.nome }}"
+                   placeholder="Seu nome"
+                   required>
+
+            <input type="email"
+                   name="email"
+                   value="{{ dados.email }}"
+                   placeholder="Seu email">
+
+            <label style="margin-top: 15px;">Foto de Perfil:</label>
+            <input type="file" name="foto">
+
+            <button class="btn-salvar">Salvar Alterações</button>
+
+        </form>
+
+        {% if erro %}
+        <p class="erro">{{ erro }}</p>
+        {% endif %}
+
+        {% if sucesso %}
+        <p class="sucesso">{{ sucesso }}</p>
+        {% endif %}
+
+        <a href="/dashboard" class="voltar">⬅ Voltar ao Dashboard</a>
+    </div>
+
+</body>
+</html>

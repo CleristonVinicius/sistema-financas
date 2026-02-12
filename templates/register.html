@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastrar</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #000428, #004e92);
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            color: #fff;
+        }
+
+        .register-box {
+            width: 350px;
+            background: rgba(0,0,0,0.5);
+            padding: 30px;
+            border-radius: 14px;
+            border: 2px solid #00aaff;
+            box-shadow: 0 0 20px #0095ff;
+            text-align: center;
+        }
+
+        h2 {
+            color: #00c3ff;
+            margin-bottom: 18px;
+            text-shadow: 0 0 8px #00b7ff;
+        }
+
+        input {
+            width: 90%;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            font-size: 15px;
+        }
+
+        .register-btn {
+            width: 95%;
+            padding: 12px;
+            background: #00aaff;
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+            font-size: 17px;
+        }
+
+        .register-btn:hover {
+            background: #0088dd;
+        }
+
+        .msg {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #ff4444;
+            font-weight: bold;
+        }
+
+        a {
+            color: #00c3ff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="register-box">
+        <h2>📝 Criar Conta</h2>
+
+        <form method="POST">
+            <input type="text" name="usuario" placeholder="Usuário" required>
+            <input type="password" name="senha" placeholder="Senha" required>
+
+            <button class="register-btn">Cadastrar</button>
+        </form>
+
+        {% if msg %}
+        <div class="msg">{{ msg }}</div>
+        {% endif %}
+
+        <p style="margin-top: 15px;">
+            Já tem conta?
+            <a href="/">Entrar</a>
+        </p>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #000428, #004e92);
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            color: #fff;
+        }
+
+        .login-box {
+            width: 350px;
+            background: rgba(0, 0, 0, 0.55);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #00aaff;
+            box-shadow: 0 0 25px #0088ff;
+            text-align: center;
+        }
+
+        .login-box h2 {
+            margin-bottom: 20px;
+            color: #00c3ff;
+            text-shadow: 0 0 8px #00bbff;
+        }
+
+        .login-box input {
+            width: 90%;
+            padding: 12px;
+            margin: 8px 0;
+            border: none;
+            outline: none;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        .login-btn {
+            width: 95%;
+            padding: 12px;
+            background: #00aaff;
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 17px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .login-btn:hover {
+            background: #0088dd;
+        }
+
+        .erro {
+            margin-top: 10px;
+            color: #ff5555;
+            font-size: 14px;
+        }
+
+        .link-btn {
+            margin-top: 10px;
+            background: none;
+            border: none;
+            color: #00c3ff;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: underline;
+        }
+
+        .link-btn:hover {
+            color: #29d2ff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-box">
+        <h2>💠 Login</h2>
+
+        <form method="POST">
+            <input type="text" name="usuario" placeholder="Usuário" required>
+            <input type="password" name="senha" placeholder="Senha" required>
+            <button class="login-btn">Entrar</button>
+        </form>
+
+        {% if erro %}
+        <div class="erro">{{ erro }}</div>
+        {% endif %}
+
+        {% if session.get("login_erro") %}
+        <form action="/esqueci_senha" method="POST">
+            <input type="hidden" name="usuario" value="{{ request.form.get('usuario', '') }}">
+            <button class="link-btn" type="submit">Esqueci minha senha</button>
+        </form>
+        {% endif %}
+
+        <p style="margin-top: 10px;">
+            Não tem conta?
+            <a class="link-btn" style="text-decoration:none;" href="/register">Cadastrar</a>
+        </p>
+    </div>
+
+</body>
+
+</html>

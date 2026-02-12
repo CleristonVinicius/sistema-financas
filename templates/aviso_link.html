@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Redefinir Senha</title>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #000428, #004e92);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: #fff;
+        }
+
+        .box {
+            background: rgba(0,0,0,0.5);
+            padding: 25px;
+            border-radius: 12px;
+            width: 360px;
+            text-align: center;
+            border: 2px solid #00aaff;
+            box-shadow: 0 0 25px #0088ff;
+        }
+
+        a {
+            color: #00c3ff;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="box">
+        <h2>🔗 Link gerado!</h2>
+        <p>Use o link abaixo para redefinir sua senha:</p>
+
+        <p style="margin-top: 15px; word-break: break-all;">
+            <a href="{{ reset_link }}">{{ reset_link }}</a>
+        </p>
+
+        <p style="margin-top: 20px;">O link expira em 10 minutos.</p>
+
+        <a href="/">Voltar ao Login</a>
+    </div>
+
+</body>
+</html>
