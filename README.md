@@ -1,11 +1,51 @@
-Aplicação web simples para controle de finanças pessoais, desenvolvida com foco em aprendizado de Back-end com Python.Funcionalidades
+# Sistema de Controle Financeiro
 
-Cadastro de receitas e despesas
+Aplicação web desenvolvida com Python e Flask para gerenciamento de finanças pessoais.
 
-Listagem de movimentações financeiras
+### Tela de Login
+![Login](static/images/login.png)
 
-Armazenamento em banco de dados
+### Dashboard
+![Dashboard](static/images/dashboard.png)
 
-Organização por categorias
+### Registro de Usuário
+![Registro](static/images/registro.png)
 
-Interface web simples e funcional
+### Cadastro de Receita/Despesa
+![Cadastro](static/images/cadastro.png)
+
+## Funcionalidades
+
+- Cadastro de receitas e despesas
+- Visualização dos dados financeiros
+- Geração de relatórios em PDF
+- Exportação de dados para Excel
+
+## Tecnologias utilizadas
+
+- Python
+- Flask
+- Pandas
+- SQLite
+- ReportLab
+- OpenPyXL / XlsxWriter
+
+## Como rodar o projeto
+
+1. Clonar o repositório
+  bash
+  git clone https://github.com/seuusuario/sistema-financas.git
+  cd sistema-financas
+
+2. Criar ambiente virtual
+  python -m venv venv
+  venv\Scripts\activate
+
+3. Instalar dependências
+  pip install -r requirements.txt
+
+4. Executar o projeto
+  python app.py
+
+5. Acessar no navegador
+  http://127.0.0.1:5000s
