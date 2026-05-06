@@ -9,10 +9,10 @@ Aplicação web desenvolvida com Python e Flask para gerenciamento de finanças 
 ![Dashboard](static/images/dashboard.png)
 
 ### Registro de Usuário
-![Registro](static/images/registro.png)
+![Cadastro](static/images/cadastro.png)
 
 ### Cadastro de Receita/Despesa
-![Cadastro](static/images/cadastro.png)
+![Registro](static/images/registro.png)
 
 ## Funcionalidades
 
